@@ -1,0 +1,40 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: testvm
+spec:
+  dataVolumeTemplates:
+  - metadata:
+      name: volume1
+      annotations:
+        cdi.kibevirt.io/storage.prePopulated: volume1
+    spec:
+      storage:
+        resources:
+          requests:
+            storage: 5Gi
+      source:
+        blank: {}
+  runStrategy: Always
+  template:
+    spec:
+      domain:
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: root-volume
+          interfaces:
+          - masquerade: {}
+            name: default
+        resources:
+          requests:
+            memory: 4Gi
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+      - persistentVolumeClaim:
+          claimName: volume1
+        name: root-volume
+
