@@ -37,3 +37,57 @@ spec:
       - dataVolume:
           name: volume1
         name: root-volume
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    cdi.kubevirt.io/allowClaimAdoption: "true"
+    cdi.kubevirt.io/createdForDataVolume: d90655a2-c151-45ec-993b-7c39c18c13a9
+    cdi.kubevirt.io/storage.condition.running: "false"
+    cdi.kubevirt.io/storage.condition.running.message: Import Complete
+    cdi.kubevirt.io/storage.condition.running.reason: Completed
+    cdi.kubevirt.io/storage.contentType: kubevirt
+    cdi.kubevirt.io/storage.pod.phase: Succeeded
+    cdi.kubevirt.io/storage.pod.restarts: "0"
+    cdi.kubevirt.io/storage.populator.progress: 100.0%
+    cdi.kubevirt.io/storage.preallocation.requested: "false"
+    cdi.kubevirt.io/storage.usePopulator: "true"
+    pv.kubernetes.io/bind-completed: "yes"
+    pv.kubernetes.io/bound-by-controller: "yes"
+    volume.beta.kubernetes.io/storage-provisioner: rook-ceph.rbd.csi.ceph.com
+    volume.kubernetes.io/storage-provisioner: rook-ceph.rbd.csi.ceph.com
+  creationTimestamp: "2025-04-14T14:39:04Z"
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    app: containerized-data-importer
+    app.kubernetes.io/component: storage
+    app.kubernetes.io/managed-by: cdi-controller
+    kubevirt.io/created-by: 2093423d-d8e4-4263-b6b4-84c1a59620f2
+  name: volume1
+  namespace: default
+  ownerReferences:
+  - apiVersion: cdi.kubevirt.io/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: DataVolume
+    name: volume1
+    uid: d90655a2-c151-45ec-993b-7c39c18c13a9
+spec:
+  accessModes:
+  - ReadWriteMany
+  dataSource:
+    apiGroup: cdi.kubevirt.io
+    kind: VolumeImportSource
+    name: volume-import-source-d90655a2-c151-45ec-993b-7c39c18c13a9
+  dataSourceRef:
+    apiGroup: cdi.kubevirt.io
+    kind: VolumeImportSource
+    name: volume-import-source-d90655a2-c151-45ec-993b-7c39c18c13a9
+  resources:
+    requests:
+      storage: "5368709120"
+  storageClassName: rook-ceph-block
+  volumeMode: Block
+  volumeName: pvc-913d326a-f5d4-4314-abe0-6269ce0e55b1
