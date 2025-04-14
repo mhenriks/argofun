@@ -6,15 +6,15 @@ spec:
   dataVolumeTemplates:
   - metadata:
       name: volume1
-      annotations:
-        cdi.kibevirt.io/storage.prePopulated: volume1
     spec:
       storage:
         resources:
           requests:
             storage: 5Gi
       source:
-        blank: {}
+        registry:
+          url: "docker://quay.io/kubevirtci/fedora-with-test-tooling:fc35-2208011009"
+          pullMethod: node
   runStrategy: Always
   template:
     spec:
@@ -34,7 +34,6 @@ spec:
       - name: default
         pod: {}
       volumes:
-      - persistentVolumeClaim:
-          claimName: volume1
+      - dataVolume:
+          name: volume1
         name: root-volume
-
